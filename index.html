@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FreshCart - Online Grocery Store | Home</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <a href="index.html" class="logo">
+      <div class="logo-icon">🛒</div>
+      <span>FreshCart</span>
+    </a>
+
+    <ul class="nav-links">
+      <li><a href="index.html" class="nav-link active">Home</a></li>
+      <li><a href="#categories" class="nav-link">Categories</a></li>
+      <li><a href="#benefits" class="nav-link">Why Choose Us</a></li>
+      <li><a href="#featured" class="nav-link">Featured Items</a></li>
+    </ul>
+
+    <div class="nav-actions" id="nav-auth-actions">
+      <a href="login.html" class="btn btn-outline">Login</a>
+      <a href="signup.html" class="btn btn-primary">Sign Up</a>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <h1>Fresh Farm Groceries Delivered To Your Doorstep</h1>
+    <p>Shop daily essentials, organic fruits, vegetables, dairy, and household items at the best prices with express delivery.</p>
+    <div class="hero-buttons">
+      <a href="login.html" class="btn btn-secondary btn-sm" style="padding: 0.8rem 1.8rem; font-size: 1.1rem;">Shop Now 🛒</a>
+      <a href="signup.html" class="btn btn-outline" style="color: var(--white); border-color: var(--white); padding: 0.8rem 1.8rem; font-size: 1.1rem;">Create Account</a>
+    </div>
+  </section>
+
+  <!-- Categories Section -->
+  <section class="section" id="categories">
+    <h2 class="section-title">Explore Grocery Categories</h2>
+    <p class="section-subtitle">Browse through our wide range of fresh and high-quality products</p>
+    
+    <div class="categories-grid">
+      <div class="category-card" onclick="window.location.href='login.html'">
+        <div class="category-icon">🍎</div>
+        <div class="category-title">Fruits</div>
+      </div>
+      <div class="category-card" onclick="window.location.href='login.html'">
+        <div class="category-icon">🥦</div>
+        <div class="category-title">Vegetables</div>
+      </div>
+      <div class="category-card" onclick="window.location.href='login.html'">
+        <div class="category-icon">🥛</div>
+        <div class="category-title">Dairy</div>
+      </div>
+      <div class="category-card" onclick="window.location.href='login.html'">
+        <div class="category-icon">🍞</div>
+        <div class="category-title">Bakery</div>
+      </div>
+      <div class="category-card" onclick="window.location.href='login.html'">
+        <div class="category-icon">🧃</div>
+        <div class="category-title">Beverages</div>
+      </div>
+      <div class="category-card" onclick="window.location.href='login.html'">
+        <div class="category-icon">🍪</div>
+        <div class="category-title">Snacks</div>
+      </div>
+      <div class="category-card" onclick="window.location.href='login.html'">
+        <div class="category-icon">🧹</div>
+        <div class="category-title">Household</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Benefits Section -->
+  <section class="section" id="benefits" style="background-color: var(--white); border-radius: var(--radius-lg); margin-bottom: 3rem;">
+    <h2 class="section-title">Why Shop With FreshCart?</h2>
+    <p class="section-subtitle">We prioritize freshness, quality, speed, and affordability</p>
+
+    <div class="benefits-grid">
+      <div class="benefit-card">
+        <div class="benefit-icon">🌾</div>
+        <h3 class="benefit-title">100% Farm Fresh</h3>
+        <p>Directly sourced from local organic farmers to ensure maximum freshness and quality.</p>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon">⚡</div>
+        <h3 class="benefit-title">Express Delivery</h3>
+        <p>Choose your preferred date and convenient time slot for doorstep delivery within hours.</p>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon">🏷️</div>
+        <h3 class="benefit-title">Best Offers & Coupons</h3>
+        <p>Enjoy exclusive discount coupons like SAVE10 and GROCERY20 on every order.</p>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon">🔒</div>
+        <h3 class="benefit-title">Easy & Safe Checkout</h3>
+        <p>Multiple convenient payment methods including Cash on Delivery and Online Payment.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Items Preview Section -->
+  <section class="section" id="featured">
+    <h2 class="section-title">Featured Weekly Deals</h2>
+    <p class="section-subtitle">Handpicked fresh groceries with deep discounts</p>
+
+    <div class="products-grid" id="home-featured-grid">
+      <!-- Dynamically populated via products.js -->
+    </div>
+    
+    <div style="text-align: center; margin-top: 2.5rem;">
+      <a href="login.html" class="btn btn-primary btn-sm" style="padding: 0.8rem 2rem; font-size: 1rem;">View All Products & Shop Now →</a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-content">
+      <div class="footer-section">
+        <h4>🛒 FreshCart</h4>
+        <p>Your trusted online grocery supermarket. Delivering freshness and happiness every day.</p>
+      </div>
+      <div class="footer-section">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="login.html">Login</a></li>
+          <li><a href="signup.html">Register Account</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h4>Categories</h4>
+        <ul>
+          <li>Fruits & Vegetables</li>
+          <li>Dairy & Bakery</li>
+          <li>Beverages & Snacks</li>
+          <li>Household Needs</li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h4>SDC Project Details</h4>
+        <p>SDC Project Review-1 Implementation</p>
+        <p>Built with Pure HTML5, CSS3, & Vanilla JS</p>
+        <p>State Persisted in Browser Local Storage</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 FreshCart Online Grocery Store. Designed for SDC Project Review-1.</p>
+    </div>
+  </footer>
+
+  <!-- Core JavaScript Libraries -->
+  <script src="js/app.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/products.js"></script>
+  <script>
+    // Update navbar if already logged in
+    document.addEventListener('DOMContentLoaded', () => {
+      const user = getCurrentUser();
+      if (user) {
+        const navAuth = document.getElementById('nav-auth-actions');
+        const targetDash = user.role === 'admin' ? 'admin-dashboard.html' : 'user-dashboard.html';
+        navAuth.innerHTML = `
+          <a href="${targetDash}" class="btn btn-primary">Go to Dashboard (${user.name})</a>
+        `;
+      }
+      // Render top featured products on home page
+      renderProducts('home-featured-grid');
+    });
+  </script>
+</body>
+</html>

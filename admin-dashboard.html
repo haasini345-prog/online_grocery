@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FreshCart - Admin Management Dashboard</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Top Navbar -->
+  <nav class="navbar">
+    <a href="admin-dashboard.html" class="logo">
+      <div class="logo-icon" style="background-color: #fff3e0; color: var(--secondary-color);">⚙️</div>
+      <span>FreshCart <span style="font-size: 0.8rem; background: var(--secondary-color); color: var(--white); padding: 0.2rem 0.6rem; border-radius: 10px; margin-left: 0.4rem;">ADMIN</span></span>
+    </a>
+
+    <div class="nav-actions">
+      <span id="admin-name-display" style="font-weight: 600; font-size: 0.9rem;">Store Admin</span>
+      <button class="btn btn-outline btn-sm" onclick="logoutUser()">Logout</button>
+    </div>
+  </nav>
+
+  <!-- Admin Sidebar & Main Content Layout -->
+  <div class="admin-layout">
+    
+    <!-- Sidebar Menu -->
+    <aside class="sidebar">
+      <div class="sidebar-menu-item active" onclick="showAdminTab('admin-dashboard-tab')">
+        <span>📊</span> <span>Dashboard Overview</span>
+      </div>
+      <div class="sidebar-menu-item" onclick="showAdminTab('admin-products-tab')">
+        <span>🍎</span> <span>Product Catalog</span>
+      </div>
+      <div class="sidebar-menu-item" onclick="showAdminTab('admin-inventory-tab')">
+        <span>📦</span> <span>Inventory & Stock</span>
+      </div>
+      <div class="sidebar-menu-item" onclick="showAdminTab('admin-orders-tab')">
+        <span>🚚</span> <span>Customer Orders</span>
+      </div>
+      <div class="sidebar-menu-item" onclick="showAdminTab('admin-users-tab')">
+        <span>👥</span> <span>Registered Users</span>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+
+      <!-- TAB 1: OVERVIEW & KPIS -->
+      <div id="admin-dashboard-tab">
+        <h2 style="margin-bottom: 0.4rem; color: var(--primary-color);">Dashboard Overview</h2>
+        <p style="color: var(--muted-text); margin-bottom: 2rem;">Real-time performance summary of your grocery store</p>
+
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-icon green">🍎</div>
+            <div class="stat-details">
+              <h3 id="stat-total-products">0</h3>
+              <p>Total Products</p>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon orange">🚚</div>
+            <div class="stat-details">
+              <h3 id="stat-total-orders">0</h3>
+              <p>Total Orders</p>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon blue">💰</div>
+            <div class="stat-details">
+              <h3 id="stat-total-revenue">₹0.00</h3>
+              <p>Total Revenue</p>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon blue">👥</div>
+            <div class="stat-details">
+              <h3 id="stat-total-users">0</h3>
+              <p>Registered Users</p>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon red">⚠️</div>
+            <div class="stat-details">
+              <h3 id="stat-low-stock">0</h3>
+              <p>Low Stock Items</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick Info Box -->
+        <div style="background-color: var(--white); padding: 1.8rem; border-radius: var(--radius-md); box-shadow: var(--card-shadow);">
+          <h3 style="margin-bottom: 0.8rem; color: var(--dark-text);">📌 Admin Control Quick Actions</h3>
+          <p style="font-size: 0.95rem; color: var(--muted-text); margin-bottom: 1.2rem;">
+            Use the sidebar menu to manage grocery products, adjust stock quantities & prices in real-time, change delivery order statuses, and inspect registered user accounts.
+          </p>
+          <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+            <button class="btn btn-primary" onclick="showAdminTab('admin-products-tab'); openAddProductModal();">+ Add New Product</button>
+            <button class="btn btn-secondary" onclick="showAdminTab('admin-orders-tab');">Manage Customer Orders</button>
+            <button class="btn btn-outline" onclick="showAdminTab('admin-inventory-tab');">View Inventory Alerts</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 2: PRODUCT CATALOG MANAGEMENT (CRUD) -->
+      <div id="admin-products-tab" style="display: none;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+          <div>
+            <h2 style="color: var(--primary-color);">Product Catalog Management</h2>
+            <p style="color: var(--muted-text);">Add, edit, or delete items in the store</p>
+          </div>
+          <button class="btn btn-primary" onclick="openAddProductModal()">+ Add New Product</button>
+        </div>
+
+        <div class="table-container">
+          <table class="custom-table">
+            <thead>
+              <tr>
+                <th>Image</th>
+                <th>Name</th>
+                <th>Category</th>
+                <th>Price</th>
+                <th>Discount</th>
+                <th>Stock</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="admin-products-table-body">
+              <!-- Rendered dynamically via admin.js -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- TAB 3: INVENTORY MANAGEMENT -->
+      <div id="admin-inventory-tab" style="display: none;">
+        <h2 style="color: var(--primary-color); margin-bottom: 0.4rem;">Inventory & Stock Controls</h2>
+        <p style="color: var(--muted-text); margin-bottom: 1.5rem;">Fast inline updates for stock quantity, prices, and availability</p>
+
+        <div class="table-container">
+          <table class="custom-table">
+            <thead>
+              <tr>
+                <th>Product Name</th>
+                <th>Category</th>
+                <th>Price (₹)</th>
+                <th>Stock Quantity</th>
+                <th>Availability</th>
+                <th>Stock Alert</th>
+              </tr>
+            </thead>
+            <tbody id="admin-inventory-table-body">
+              <!-- Rendered dynamically via admin.js -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- TAB 4: ORDERS MANAGEMENT -->
+      <div id="admin-orders-tab" style="display: none;">
+        <h2 style="color: var(--primary-color); margin-bottom: 0.4rem;">Customer Orders Management</h2>
+        <p style="color: var(--muted-text); margin-bottom: 1.5rem;">Update order status to update customer tracking timelines</p>
+
+        <div class="table-container">
+          <table class="custom-table">
+            <thead>
+              <tr>
+                <th>Order ID</th>
+                <th>Customer</th>
+                <th>Items Ordered</th>
+                <th>Total</th>
+                <th>Delivery Slot</th>
+                <th>Status</th>
+                <th>Change Status</th>
+              </tr>
+            </thead>
+            <tbody id="admin-orders-table-body">
+              <!-- Rendered dynamically via admin.js -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- TAB 5: USER MANAGEMENT -->
+      <div id="admin-users-tab" style="display: none;">
+        <h2 style="color: var(--primary-color); margin-bottom: 0.4rem;">Registered Users Overview</h2>
+        <p style="color: var(--muted-text); margin-bottom: 1.5rem;">List of accounts registered in LocalStorage</p>
+
+        <div class="table-container">
+          <table class="custom-table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Role</th>
+                <th>Registration Date</th>
+                <th>Account Status</th>
+              </tr>
+            </thead>
+            <tbody id="admin-users-table-body">
+              <!-- Rendered dynamically via admin.js -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- ADD / EDIT PRODUCT MODAL -->
+  <div class="modal-overlay" id="product-modal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 id="product-modal-title">Add New Product</h3>
+        <button class="modal-close" onclick="closeModal('product-modal')">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form id="product-form" onsubmit="handleSaveProduct(event)">
+          <div class="form-group">
+            <label for="prod-name">Product Name</label>
+            <input type="text" id="prod-name" class="form-control" placeholder="e.g. Organic Strawberries" required>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="prod-category">Category</label>
+              <select id="prod-category" class="form-control" required>
+                <option value="Fruits">Fruits</option>
+                <option value="Vegetables">Vegetables</option>
+                <option value="Dairy">Dairy</option>
+                <option value="Bakery">Bakery</option>
+                <option value="Beverages">Beverages</option>
+                <option value="Snacks">Snacks</option>
+                <option value="Household">Household</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="prod-price">Price (₹)</label>
+              <input type="number" step="0.01" id="prod-price" class="form-control" placeholder="100" required>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="prod-discount">Discount (%)</label>
+              <input type="number" id="prod-discount" class="form-control" placeholder="0" value="0">
+            </div>
+            <div class="form-group">
+              <label for="prod-stock">Stock Quantity</label>
+              <input type="number" id="prod-stock" class="form-control" placeholder="50" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="prod-image">Product Image URL</label>
+            <input type="url" id="prod-image" class="form-control" placeholder="https://images.unsplash.com/..." required>
+          </div>
+
+          <div class="form-group">
+            <label for="prod-description">Product Description</label>
+            <textarea id="prod-description" class="form-control" rows="2" placeholder="Brief details about freshness, source, or weight..."></textarea>
+          </div>
+
+          <div class="form-group" style="flex-direction: row; align-items: center; gap: 0.5rem;">
+            <input type="checkbox" id="prod-available" checked style="width: 18px; height: 18px;">
+            <label for="prod-available" style="margin: 0; cursor: pointer;">Product is available for purchase</label>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-block" style="margin-top: 1rem; padding: 0.8rem;">
+            Save Product Details
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/app.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/admin.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Require Admin Guard
+      const admin = requireAdmin();
+      if (!admin) return;
+
+      document.getElementById('admin-name-display').textContent = admin.name;
+      initAdminDashboard();
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FreshCart - Customer Dashboard</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Customer Navbar -->
+  <nav class="navbar">
+    <a href="index.html" class="logo">
+      <div class="logo-icon">🛒</div>
+      <span>FreshCart</span>
+    </a>
+
+    <ul class="nav-links">
+      <li><span class="nav-link active" onclick="showTab('products-tab', this)">Products</span></li>
+      <li><span class="nav-link" onclick="showTab('orders-tab', this)">My Orders</span></li>
+      <li><span class="nav-link" onclick="showTab('recommendations-tab', this)">For You ⭐</span></li>
+      <li><span class="nav-link" onclick="showTab('profile-tab', this)">Profile</span></li>
+    </ul>
+
+    <div class="nav-actions">
+      <div class="cart-badge-container" onclick="openCartModal()" title="View Cart">
+        <span style="font-size: 1.6rem;">🛒</span>
+        <span class="badge cart-count">0</span>
+      </div>
+      <button class="btn btn-outline btn-sm" onclick="logoutUser()">Logout</button>
+    </div>
+  </nav>
+
+  <!-- Main Body Content -->
+  <main class="section" style="padding-top: 2rem; min-height: calc(100vh - 150px);">
+
+    <!-- TAB 1: PRODUCTS BROWSER -->
+    <div id="products-tab" class="dashboard-tab-content">
+      <!-- Search & Category Filters Bar -->
+      <div class="controls-bar">
+        <div class="search-box">
+          <span class="search-icon">🔍</span>
+          <input type="text" class="form-control" placeholder="Search fresh groceries by name or category..." oninput="handleProductSearch(this.value)">
+        </div>
+
+        <div class="category-filter-chips">
+          <span class="chip active" onclick="filterCategory('All')">All</span>
+          <span class="chip" onclick="filterCategory('Fruits')">🍎 Fruits</span>
+          <span class="chip" onclick="filterCategory('Vegetables')">🥦 Vegetables</span>
+          <span class="chip" onclick="filterCategory('Dairy')">🥛 Dairy</span>
+          <span class="chip" onclick="filterCategory('Bakery')">🍞 Bakery</span>
+          <span class="chip" onclick="filterCategory('Beverages')">🧃 Beverages</span>
+          <span class="chip" onclick="filterCategory('Snacks')">🍪 Snacks</span>
+          <span class="chip" onclick="filterCategory('Household')">🧹 Household</span>
+        </div>
+      </div>
+
+      <!-- Products Grid -->
+      <div class="products-grid" id="products-grid">
+        <!-- Rendered dynamically via js/products.js -->
+      </div>
+    </div>
+
+    <!-- TAB 2: MY ORDERS & TRACKING -->
+    <div id="orders-tab" class="dashboard-tab-content" style="display: none;">
+      <h2 style="margin-bottom: 0.5rem; color: var(--primary-color);">My Order History & Live Tracking</h2>
+      <p style="color: var(--muted-text); margin-bottom: 2rem;">Track the status of your grocery deliveries in real-time</p>
+      
+      <div id="orders-list-container">
+        <!-- Rendered dynamically via js/orders.js -->
+      </div>
+    </div>
+
+    <!-- TAB 3: PERSONALIZED RECOMMENDATIONS -->
+    <div id="recommendations-tab" class="dashboard-tab-content" style="display: none;">
+      <div style="background-color: var(--white); padding: 2rem; border-radius: var(--radius-md); box-shadow: var(--card-shadow); margin-bottom: 2rem;">
+        <h2 style="color: var(--primary-color); margin-bottom: 0.4rem;">Recommended For You</h2>
+        <p style="color: var(--muted-text);">Personalized grocery suggestions based on your browsing and order history</p>
+      </div>
+
+      <div class="products-grid" id="recommendations-grid">
+        <!-- Rendered dynamically via js/products.js -->
+      </div>
+    </div>
+
+    <!-- TAB 4: PROFILE -->
+    <div id="profile-tab" class="dashboard-tab-content" style="display: none;">
+      <div class="auth-card" style="max-width: 500px; margin: 0 auto;">
+        <div class="auth-header">
+          <div style="width: 70px; height: 70px; background-color: var(--primary-light); color: var(--primary-color); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2.2rem; margin: 0 auto 1rem auto;">
+            👤
+          </div>
+          <h2 id="profile-name">Customer Name</h2>
+          <p id="profile-role" style="text-transform: uppercase; font-weight: 700; color: var(--primary-color); font-size: 0.85rem;">USER ACCOUNT</p>
+        </div>
+
+        <div style="background-color: var(--light-bg); padding: 1.2rem; border-radius: var(--radius-sm); margin-bottom: 1.5rem;">
+          <div style="margin-bottom: 0.8rem;">
+            <strong style="color: var(--muted-text); font-size: 0.85rem;">Email Address:</strong>
+            <div id="profile-email" style="font-weight: 600;">-</div>
+          </div>
+          <div style="margin-bottom: 0.8rem;">
+            <strong style="color: var(--muted-text); font-size: 0.85rem;">Phone Number:</strong>
+            <div id="profile-phone" style="font-weight: 600;">-</div>
+          </div>
+          <div>
+            <strong style="color: var(--muted-text); font-size: 0.85rem;">Member Since:</strong>
+            <div id="profile-date" style="font-weight: 600;">-</div>
+          </div>
+        </div>
+
+        <button class="btn btn-danger btn-block" onclick="logoutUser()">Logout from Account</button>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- SHOPPING CART MODAL -->
+  <div class="modal-overlay" id="cart-modal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3>🛒 Your Shopping Cart</h3>
+        <button class="modal-close" onclick="closeModal('cart-modal')">&times;</button>
+      </div>
+      <div class="modal-body" id="cart-items-container">
+        <!-- Rendered dynamically via js/cart.js -->
+      </div>
+      <div id="cart-summary-container" style="padding: 0 1.8rem 1.5rem 1.8rem;">
+        <!-- Summary & Checkout Button rendered dynamically -->
+      </div>
+    </div>
+  </div>
+
+  <!-- CHECKOUT MODAL -->
+  <div class="modal-overlay" id="checkout-modal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3>📦 Complete Your Order</h3>
+        <button class="modal-close" onclick="closeModal('checkout-modal')">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form id="checkout-form" onsubmit="placeOrder(event)">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="checkout-name">Customer Name</label>
+              <input type="text" id="checkout-name" class="form-control" required>
+            </div>
+            <div class="form-group">
+              <label for="checkout-phone">Phone Number</label>
+              <input type="tel" id="checkout-phone" class="form-control" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="checkout-address">Delivery Address</label>
+            <textarea id="checkout-address" class="form-control" rows="2" placeholder="Street address, apartment/flat, landmark..." required></textarea>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="checkout-date">Preferred Delivery Date</label>
+              <input type="date" id="checkout-date" class="form-control" required>
+            </div>
+            <div class="form-group">
+              <label for="checkout-slot">Time Slot</label>
+              <select id="checkout-slot" class="form-control" required>
+                <option value="Morning (08:00 AM - 11:00 AM)">Morning (08:00 AM - 11:00 AM)</option>
+                <option value="Afternoon (12:00 PM - 03:00 PM)">Afternoon (12:00 PM - 03:00 PM)</option>
+                <option value="Evening (05:00 PM - 08:00 PM)">Evening (05:00 PM - 08:00 PM)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="checkout-payment">Payment Method</label>
+            <select id="checkout-payment" class="form-control" required>
+              <option value="Cash on Delivery">Cash on Delivery (COD)</option>
+              <option value="Online Payment (UPI/Card Demo)">Online Payment (UPI / Card Demo)</option>
+            </select>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-block" style="margin-top: 1rem; padding: 0.8rem;">
+            Confirm & Place Order 🛒
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-bottom" style="border: none; padding: 0;">
+      <p>&copy; 2026 FreshCart Online Grocery Store. User Portal.</p>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/app.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/products.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/orders.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Security check: require authenticated user
+      const currentUser = requireAuth();
+      if (!currentUser) return;
+
+      // Populate profile info
+      document.getElementById('profile-name').textContent = currentUser.name;
+      document.getElementById('profile-email').textContent = currentUser.email;
+      document.getElementById('profile-phone').textContent = currentUser.phone || 'N/A';
+      document.getElementById('profile-date').textContent = formatDate(currentUser.registeredAt);
+
+      // Set min date for checkout picker to today
+      const today = new Date().toISOString().split('T')[0];
+      const dateInput = document.getElementById('checkout-date');
+      if (dateInput) {
+        dateInput.min = today;
+        dateInput.value = today;
+      }
+
+      // Initial Renders
+      renderProducts();
+      updateCartBadge();
+      renderRecommendations();
+      renderUserOrders();
+    });
+
+    // Tab Switching Helper
+    function showTab(tabId, el) {
+      const contents = document.querySelectorAll('.dashboard-tab-content');
+      contents.forEach(c => c.style.display = 'none');
+      
+      const target = document.getElementById(tabId);
+      if (target) target.style.display = 'block';
+
+      if (el) {
+        const links = document.querySelectorAll('.nav-link');
+        links.forEach(l => l.classList.remove('active'));
+        el.classList.add('active');
+      }
+
+      if (tabId === 'orders-tab') renderUserOrders();
+      if (tabId === 'recommendations-tab') renderRecommendations();
+      if (tabId === 'products-tab') renderProducts();
+    }
+
+    // Modal Helper
+    function openCartModal() {
+      renderCartModal();
+      openModal('cart-modal');
+    }
+  </script>
+</body>
+</html>

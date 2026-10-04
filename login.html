@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FreshCart - Login</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Navigation Header -->
+  <nav class="navbar">
+    <a href="index.html" class="logo">
+      <div class="logo-icon">🛒</div>
+      <span>FreshCart</span>
+    </a>
+    <div class="nav-actions">
+      <a href="index.html" class="btn btn-outline btn-sm">← Back to Home</a>
+      <a href="signup.html" class="btn btn-primary btn-sm">Sign Up</a>
+    </div>
+  </nav>
+
+  <!-- Login Form Container -->
+  <div class="auth-container">
+    <div class="auth-card">
+      <div class="auth-header">
+        <h2>Welcome Back</h2>
+        <p>Login to your FreshCart account to access groceries and orders</p>
+      </div>
+
+      <form id="login-form" onsubmit="event.preventDefault(); handleLoginSubmit();">
+        <div class="form-group">
+          <label for="login-email">Email Address</label>
+          <input type="email" id="login-email" class="form-control" placeholder="e.g. john@example.com or admin@grocery.com" required autofocus>
+        </div>
+
+        <div class="form-group">
+          <label for="login-password">Password</label>
+          <input type="password" id="login-password" class="form-control" placeholder="Enter password" required>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block" style="margin-top: 1rem; padding: 0.8rem;">
+          Login to Account
+        </button>
+      </form>
+
+      <div class="demo-credentials">
+        <h4 style="color: var(--secondary-color); margin-bottom: 0.4rem; font-size: 0.9rem;">📌 SDC Review Demo Credentials:</h4>
+        <div style="margin-bottom: 0.3rem;">
+          <strong>Admin Login:</strong> <code>admin@grocery.com</code> | <code>admin123</code>
+        </div>
+        <div>
+          <strong>User Login:</strong> <code>john@example.com</code> | <code>user123</code> (or Create New)
+        </div>
+      </div>
+
+      <div class="auth-footer">
+        <p>Don't have an account yet? <a href="signup.html">Create a New Account</a></p>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/app.js"></script>
+  <script src="js/auth.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Redirect if user is already logged in
+      redirectIfLoggedIn();
+    });
+
+    function handleLoginSubmit() {
+      const email = document.getElementById('login-email').value;
+      const password = document.getElementById('login-password').value;
+      loginUser(email, password);
+    }
+  </script>
+</body>
+</html>
